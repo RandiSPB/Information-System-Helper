@@ -32,14 +32,15 @@ def text_memory_coast(alphabet_power: int, num_pages: int, chars_per_page: int) 
     return f'Memory cost: {num_pages * chars_per_page * math.log(alphabet_power, 2)}'
 
 
-def min_bit(number: int) -> int:
+def min_bit(number: int, base: int = 2) -> int:
     """
     Кол-во битов для хранения натуральных чисел меньше энного
     :param number: Последнее число которое должно хранится
+    :param base: Количество состояний, нужно например в задачу про лампочку в обычном виде (бит -> 0,1)
     :return: Кол-во бит
     """
     exp = 1
-    while 2 ** exp < number:
+    while base ** exp < number:
         exp += 1
     return exp
 
@@ -61,5 +62,7 @@ def unit_converter(value: float, start_measure_unit: str = 'bit', start_order: s
     bit_value /= units_map[res_measure_unit] * order_map[res_order]
     return f'{value} {start_order}{start_measure_unit} = {bit_value} {res_order}{res_measure_unit}'
 
+
+print(min_bit(18, 3))
 
 print(unit_converter(8, 'byte', 'kilo', 'bit'))
