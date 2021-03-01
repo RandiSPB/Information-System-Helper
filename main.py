@@ -21,25 +21,15 @@ def message_info(x: float, base: int = 2) -> float:
     return round(-1 * math.log(x, base), 5)
 
 
-def text_memory_coast(alphabet_power: int, num_pages: int, chars_per_page: int, measure_unit: str = 'bit',
-                      order: str = '') -> str:
+def text_memory_coast(alphabet_power: int, num_pages: int, chars_per_page: int) -> str:
     """
     Расчет размера занимаемого места
     :param alphabet_power: Мощность алфавита
     :param num_pages: Кол-во страниц
     :param chars_per_page: Символов на странице
-    :param measure_unit: Единицы измерения
-    :param order: Порядок единиц измерения
-    :return: Форматированная строка с размером файла и единицой измерения
+    :return: Форматированная строка с размером файла
     """
-    units_map = {'bit': 1, 'byte': 8}
-    order_map = {'': 1, 'kilo': 2 ** 10, 'mega': 2 ** 20, 'giga': 2 ** 30, 'tera': 2 ** 40}
-    memory_cost = int(num_pages * chars_per_page * math.log(alphabet_power, 2))
-    try:
-        return f'Memory cost: {round(memory_cost  / units_map[measure_unit] / order_map[order], 5)}' \
-               f' {order}{measure_unit}'
-    except KeyError as error:
-        return f'Неправильно указана единициа измерений или порядок - {error}'
+    return f'Memory cost: {num_pages * chars_per_page * math.log(alphabet_power, 2)}'
 
 
 def min_bit(number: int) -> int:
@@ -54,4 +44,22 @@ def min_bit(number: int) -> int:
     return exp
 
 
-print(min_bit(255))
+def unit_converter(value: float, start_measure_unit: str = 'bit', start_order: str = '', res_measure_unit: str = 'byte',
+                   res_order: str = '') -> str:
+    """
+    Функция для перевода из одних единиц в другие
+    :param value: Значение
+    :param start_measure_unit: Единицы измерения входного числа
+    :param start_order: Порядок единиц измерения входного числа
+    :param res_measure_unit: Выходные единицы измерения
+    :param res_order: Порядок выходной единицы измерения
+    :return: Форматирования строка с начальным и конечным значение
+    """
+    units_map = {'bit': 1, 'byte': 8}
+    order_map = {'': 1, 'kilo': 2 ** 10, 'mega': 2 ** 20, 'giga': 2 ** 30, 'tera': 2 ** 40}
+    bit_value = value * units_map[start_measure_unit] * order_map[start_order]
+    bit_value /= units_map[res_measure_unit] * order_map[res_order]
+    return f'{value} {start_order}{start_measure_unit} = {bit_value} {res_order}{res_measure_unit}'
+
+
+print(unit_converter(8, 'byte', 'kilo', 'bit'))
