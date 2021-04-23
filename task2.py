@@ -3,6 +3,23 @@ from typing import Union, Any
 from abc import ABC, abstractmethod
 
 
+def convert_to_bin(number: int) -> str:
+    res = ''
+    while number > 0:
+        res += str(number % 2)
+        number //= 2
+    return res[::-1]
+
+
+def convert_to_bin_rev(number: str) -> int:
+    res = 0
+    div = len(number) - 1
+    for bit in number:
+        res += int(bit) * (2 ** div)
+        div -= 1
+    return res
+
+
 def convert_to_nego(number: int) -> str:
     result = ''
     while number:
@@ -37,7 +54,6 @@ def factorial(n):
 def convert_fib(number) -> str:
     fib_list = list(fibonacci(number))
     fib_list.reverse()
-    print(fib_list)
     final_form = [0 for i in range(len(fib_list))]
     cur_dec = 0
     for fib_number in fib_list:
@@ -68,5 +84,9 @@ def convert_fact_rev(number) -> int:
     return sum(map(lambda x, y: x * y, razr, fact_list))
 
 
-print(convert_fact(106))
-print(convert_fact_rev(4120))
+def convert_fib_rev(number) -> int:
+    razr = [int(i) for i in str(number)]
+    fib_list = list(fibonacci(number))[:len(razr):]
+    fib_list.reverse()
+    return sum(map(lambda x, y: x * y, razr, fib_list))
+

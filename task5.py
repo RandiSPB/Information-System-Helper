@@ -59,8 +59,24 @@ def omega_el(number: int) -> str:
     return res
 
 
+def golomb(number: int, m: int) -> str:
+    if m // 2 == 0:
+        pass
+    else:
+        pass
+
+
+def exp_golomb(number: int, m: int) -> str:
+    w = int(math.floor(1 + (number // (2 ** m))))
+    f = int(math.floor(math.log(w, 2)))
+    tmp_bin = convert_to_bin(number)
+    print(w, f, tmp_bin)
+    if len(tmp_bin) < m:
+        tmp_bin = ('0' * (m - len(tmp_bin))) + tmp_bin
+    return un_code(f) + convert_to_bin(w)[-f:] + tmp_bin[-m:]
+
+
 print(gamma_el(100))
 print(omega_el(15))
 print(del_el(34))
-
 
